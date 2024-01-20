@@ -12,23 +12,14 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<Configuration> Configurations { get; set; }
-    public DbSet<ConfigurationRelationship> ConfigurationRelationships { get; set; }
     
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ConfigurationRelationship>()
-            .HasKey(x => new { x.ParentID, x.ChildID });
-
-        modelBuilder.Entity<ConfigurationRelationship>()
-            .HasOne(x => x.Parent)
-            .WithMany(x => x.Parents)
-            .HasForeignKey(x => x.ParentID)
-            .OnDelete(DeleteBehavior.NoAction);
-    
-        modelBuilder.Entity<ConfigurationRelationship>()
-            .HasOne(x => x.Child)
-            .WithMany(x => x.Childrens)
-            .HasForeignKey(x => x.ChildID)
-            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Configuration>()
+            .HasOne(c => c.Parent)
+            .WithMany(c => c.Children)
+            .HasForeignKey(c => c.ParentId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

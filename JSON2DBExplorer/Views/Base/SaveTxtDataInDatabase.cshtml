@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Txt";
+}
+
+@using (Html.BeginForm("TransferTxtFile", "Base", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Виберіть Txt файл:</label>
+    <input type="file" name="file" id="file" accept=".txt" />
+    <br />
+    <input type="submit" value="Завантажити" />
+}

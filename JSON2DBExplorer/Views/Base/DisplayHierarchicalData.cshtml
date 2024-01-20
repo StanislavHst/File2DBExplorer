@@ -1,0 +1,18 @@
+﻿@model List<JSON2DBExplorer.Models.Entities.Configuration>
+
+@{
+    ViewData["Title"] = "Hierarchy";
+}
+
+<ul>
+    @foreach (var node in Model)
+    {
+        <li>
+            @node.Name - @node.Value
+            @if (node.Children != null && node.Children.Any())
+            {
+                @Html.Partial("DisplayHierarchicalData", node.Children)
+            }
+        </li>
+    }
+</ul>

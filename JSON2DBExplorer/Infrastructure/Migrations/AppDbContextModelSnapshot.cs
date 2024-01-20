@@ -33,53 +33,32 @@ namespace JSON2DBExplorer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("ParentId")
+                        .HasColumnType("decimal(20,0)");
+
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentId");
+
                     b.ToTable("Configurations");
                 });
 
-            modelBuilder.Entity("JSON2DBExplorer.Models.Entities.ConfigurationRelationship", b =>
+            modelBuilder.Entity("JSON2DBExplorer.Models.Entities.Configuration", b =>
                 {
-                    b.Property<decimal>("ParentID")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.Property<decimal>("ChildID")
-                        .HasColumnType("decimal(20,0)");
-
-                    b.HasKey("ParentID", "ChildID");
-
-                    b.HasIndex("ChildID");
-
-                    b.ToTable("ConfigurationRelationships");
-                });
-
-            modelBuilder.Entity("JSON2DBExplorer.Models.Entities.ConfigurationRelationship", b =>
-                {
-                    b.HasOne("JSON2DBExplorer.Models.Entities.Configuration", "Child")
-                        .WithMany("Childrens")
-                        .HasForeignKey("ChildID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("JSON2DBExplorer.Models.Entities.Configuration", "Parent")
-                        .WithMany("Parents")
-                        .HasForeignKey("ParentID")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Child");
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("JSON2DBExplorer.Models.Entities.Configuration", b =>
                 {
-                    b.Navigation("Childrens");
-
-                    b.Navigation("Parents");
+                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

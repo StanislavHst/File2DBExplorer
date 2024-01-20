@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Json";
 }
 
-@using (Html.BeginForm("TransferFile", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("TransferJsonFile", "Base", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     <label for="file">Виберіть JSON файл:</label>
     <input type="file" name="file" id="file" accept=".json" />
